@@ -1,6 +1,7 @@
 ﻿#pragma warning disable CS8321 // Local function is declared but never used
 using System;
 using System.Linq;
+using System.Runtime.CompilerServices;
 using WhatsNewInCSharp9;
 
 // Note that this is showing the top-level statements feature.
@@ -9,11 +10,13 @@ using WhatsNewInCSharp9;
 //DemonstrateRecords();
 //DemonstrateTargetTypeNew();
 //DemonstrateModuleInitializer();
+//DemonstrateLocalsInitFlag();
 //DemonstrateNumberTypes();
-//DemonstrateCovariantReturnTypes(); // Think fluent interfaces.
+DemonstrateCovariantReturnTypes();
 //DemonstrateStaticAnonymousMethods();
 //DemonstrateLocalFunctionAttributes();
 //DemonstrateDiscardsInLambdas();
+//DemonstrateFunctionPointers();
 //DemonstrateBetterConditionalExpressions();
 //DemonstratePartialMethodSignatures();
 //DemonstratePatternMatchingEnhancements();
@@ -60,6 +63,15 @@ void DemonstrateModuleInitializer()
 	Console.Out.WriteLine(InitializedData.Values.Sum());
 }
 
+// https://docs.microsoft.com/en-us/dotnet/csharp/language-reference/proposals/csharp-9.0/skip-localsinit
+// https://devblogs.microsoft.com/dotnet/performance-improvements-in-net-5/#jit
+//[SkipLocalsInit]
+unsafe void DemonstrateLocalsInitFlag()
+{
+	Guid g;
+	Console.Out.WriteLine(*&g);
+}
+
 // https://docs.microsoft.com/en-us/dotnet/csharp/language-reference/proposals/csharp-9.0/native-integers
 // https://devblogs.microsoft.com/dotnet/introducing-the-half-type/
 void DemonstrateNumberTypes()
@@ -77,7 +89,12 @@ void DemonstrateNumberTypes()
 // https://docs.microsoft.com/en-us/dotnet/csharp/language-reference/proposals/csharp-9.0/covariant-returns
 void DemonstrateCovariantReturnTypes()
 {
+	var pipeline = new CustomPipeline();
+	pipeline = pipeline.AddIdentifier(Guid.NewGuid())
+		.AddName("Jason");
 
+	var configuration = pipeline.GetConfiguration();
+	Console.Out.WriteLine($"{configuration.Id}, {configuration.Name}");
 }
 
 // https://docs.microsoft.com/en-us/dotnet/csharp/language-reference/proposals/csharp-9.0/static-anonymous-functions
@@ -117,11 +134,20 @@ void DemonstrateStaticAnonymousMethods()
 // https://docs.microsoft.com/en-us/dotnet/csharp/language-reference/proposals/csharp-9.0/local-function-attributes
 void DemonstrateLocalFunctionAttributes()
 {
+	//[Obsolete("Use + instead")]
+	static int Add(int a, int b) => a + b;
 
+	Console.Out.WriteLine(Add(2, 3));
 }
 
 // https://docs.microsoft.com/en-us/dotnet/csharp/language-reference/proposals/csharp-9.0/lambda-discard-parameters
 void DemonstrateDiscardsInLambdas()
+{
+
+}
+
+// https://docs.microsoft.com/en-us/dotnet/csharp/language-reference/proposals/csharp-9.0/function-pointers
+void DemonstrateFunctionPointers()
 {
 
 }
@@ -139,6 +165,7 @@ void DemonstratePartialMethodSignatures()
 }
 
 // https://docs.microsoft.com/en-us/dotnet/csharp/language-reference/proposals/csharp-9.0/patterns3
+// https://devblogs.microsoft.com/dotnet/welcome-to-c-9-0/#logical-patterns
 void DemonstratePatternMatchingEnhancements()
 {
 
