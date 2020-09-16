@@ -14,7 +14,7 @@ using WhatsNewInCSharp9;
 //DemonstrateLocalsInitFlag();
 //DemonstrateNumberTypes();
 
-// WARNING: Show the code, but DO NOT run this!
+// WARNING: Show the code, but DO NOT run this until at least RC2!
 //DemonstrateCovariantReturnTypes();
 
 //DemonstrateStaticAnonymousMethods();
@@ -23,8 +23,8 @@ using WhatsNewInCSharp9;
 //DemonstrateFunctionPointers();
 //DemonstrateBetterConditionalExpressions();
 //DemonstratePartialMethodSignatures();
-//DemonstratePatternMatchingEnhancements();
-DemonstrateGetEnumeratorExtension();
+DemonstratePatternMatchingEnhancements();
+//DemonstrateGetEnumeratorExtension();
 //DemonstrateSourceGenerators();
 
 // https://docs.microsoft.com/en-us/dotnet/csharp/language-reference/proposals/csharp-9.0/records
@@ -154,10 +154,10 @@ void DemonstrateDiscardsInLambdas()
 }
 
 // https://docs.microsoft.com/en-us/dotnet/csharp/language-reference/proposals/csharp-9.0/function-pointers
-void DemonstrateFunctionPointers()
-{
-
-}
+unsafe void DemonstrateFunctionPointers() =>
+	PointingToFunctions.Invoke(
+		PointingToFunctions.Target,
+		&PointingToFunctions.Target);
 
 // https://docs.microsoft.com/en-us/dotnet/csharp/language-reference/proposals/csharp-9.0/target-typed-conditional-expression
 void DemonstrateBetterConditionalExpressions()
@@ -181,7 +181,18 @@ void DemonstratePartialMethodSignatures()
 // https://devblogs.microsoft.com/dotnet/welcome-to-c-9-0/#logical-patterns
 void DemonstratePatternMatchingEnhancements()
 {
+	Console.Out.WriteLine($"3 is {Qwirkle.Qualify(3)}");
+	Console.Out.WriteLine($"12 is {Qwirkle.Qualify(12)}");
+	Console.Out.WriteLine($"19 is {Qwirkle.Qualify(19)}");
+	Console.Out.WriteLine($"72 is {Qwirkle.Qualify(72)}");
+	Console.Out.WriteLine($"-2 is {Qwirkle.Qualify(-2)}");
+	Console.Out.WriteLine($"100 is {Qwirkle.Qualify(100)}");
 
+	var nullability = new ObjectNullability(3);
+	Console.Out.WriteLine(nullability.Equals(null));
+	Console.Out.WriteLine(nullability.Equals(new ObjectNullability(3)));
+
+	Console.Out.WriteLine(nullability != null);
 }
 
 // https://docs.microsoft.com/en-us/dotnet/csharp/language-reference/proposals/csharp-9.0/extension-getenumerator
@@ -193,12 +204,6 @@ void DemonstrateGetEnumeratorExtension()
 	{
 		Console.Out.WriteLine(value);
 	}
-	//var stuff = new Stuff { Id = Guid.NewGuid(), Value = 22 };
-
-	//foreach(var thing in stuff)
-	//{
-
-	//}
 }
 
 // https://devblogs.microsoft.com/dotnet/introducing-c-source-generators/
