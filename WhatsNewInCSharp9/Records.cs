@@ -1,9 +1,12 @@
 ﻿using System;
 
-public record Customer(int age, string name);
+public record Customer(int Age, string Name);
 
-public record IdentifiedCustomer(Guid id, int age, string name)
-	: Customer(age, name);
+public record IdentifiedCustomer(Guid Id, int Age, string Name)
+	: Customer(Age, Name);
+
+public record ValuedCustomer(decimal Money, int Age, string Name)
+	: Customer(Age, Name);
 
 public record MutuableCustomer
 {

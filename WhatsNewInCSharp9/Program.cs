@@ -1,5 +1,6 @@
 ﻿#pragma warning disable CS8321 // Local function is declared but never used
 using System;
+using System.Collections.Generic;
 using System.Linq;
 using System.Runtime.CompilerServices;
 using WhatsNewInCSharp9;
@@ -12,7 +13,10 @@ using WhatsNewInCSharp9;
 //DemonstrateModuleInitializer();
 //DemonstrateLocalsInitFlag();
 //DemonstrateNumberTypes();
-DemonstrateCovariantReturnTypes();
+
+// WARNING: Show the code, but DO NOT run this!
+//DemonstrateCovariantReturnTypes();
+
 //DemonstrateStaticAnonymousMethods();
 //DemonstrateLocalFunctionAttributes();
 //DemonstrateDiscardsInLambdas();
@@ -20,7 +24,7 @@ DemonstrateCovariantReturnTypes();
 //DemonstrateBetterConditionalExpressions();
 //DemonstratePartialMethodSignatures();
 //DemonstratePatternMatchingEnhancements();
-//DemonstrateGetEnumeratorExtension();
+DemonstrateGetEnumeratorExtension();
 //DemonstrateSourceGenerators();
 
 // https://docs.microsoft.com/en-us/dotnet/csharp/language-reference/proposals/csharp-9.0/records
@@ -28,15 +32,15 @@ void DemonstrateRecords()
 {
 	var customer = new Customer(22, "Jane");
 	Console.Out.WriteLine(customer);
-	Console.Out.WriteLine($"customer.age = {customer.age}, customer.name = {customer.name}");
+	Console.Out.WriteLine($"customer.age = {customer.Age}, customer.name = {customer.Name}");
 	// This won't work...
 	// customer.age = 44;
 	var (age, name) = customer;
 	Console.Out.WriteLine($"age = {age}, name = {name}");
 
-	var customerWithDifferentName = customer with { name = "Joe" };
+	var customerWithDifferentName = customer with { Name = "Joe" };
 	Console.Out.WriteLine(
-		$"customerWithDifferentName.age = {customerWithDifferentName.age}, customerWithDifferentName.name = {customerWithDifferentName.name}");
+		$"customerWithDifferentName.age = {customerWithDifferentName.Age}, customerWithDifferentName.name = {customerWithDifferentName.Name}");
 
 	var mutuableCustomer = new MutuableCustomer(33, "Jeff");
 	Console.Out.WriteLine($"mutuableCustomer.Age = {mutuableCustomer.Age}, mutuableCustomer.Name = {mutuableCustomer.Name}");
@@ -53,7 +57,7 @@ void DemonstrateTargetTypeNew()
 {
 	Customer customer = new(35, "Jane");
 	var wrapper = new WrappedDictionary();
-	wrapper.Add(customer.age, customer.name);
+	wrapper.Add(customer.Age, customer.Name);
 }
 
 // https://docs.microsoft.com/en-us/dotnet/csharp/language-reference/proposals/csharp-9.0/module-initializers
@@ -143,7 +147,10 @@ void DemonstrateLocalFunctionAttributes()
 // https://docs.microsoft.com/en-us/dotnet/csharp/language-reference/proposals/csharp-9.0/lambda-discard-parameters
 void DemonstrateDiscardsInLambdas()
 {
+	static void CanContinue(Func<string, Dictionary<Guid, Customer>, bool> evaluation) => 
+		Console.Out.WriteLine(evaluation("Value", new()) ? "Yes" : "No");
 
+	CanContinue((_, _) => true);
 }
 
 // https://docs.microsoft.com/en-us/dotnet/csharp/language-reference/proposals/csharp-9.0/function-pointers
@@ -155,7 +162,13 @@ void DemonstrateFunctionPointers()
 // https://docs.microsoft.com/en-us/dotnet/csharp/language-reference/proposals/csharp-9.0/target-typed-conditional-expression
 void DemonstrateBetterConditionalExpressions()
 {
+	var identifiedCustomer = new IdentifiedCustomer(Guid.NewGuid(), 22, "Josh");
+	var valuedCustomer = new ValuedCustomer(100_000_000M, 18, "Jane");
 
+	// Cannot use "var winner" here.
+	Customer winner = new Random().Next(2) == 0 ? identifiedCustomer : valuedCustomer;
+
+	Console.Out.WriteLine($"Winner is {winner.Name}");
 }
 
 // https://docs.microsoft.com/en-us/dotnet/csharp/language-reference/proposals/csharp-9.0/extending-partial-methods
@@ -174,7 +187,18 @@ void DemonstratePatternMatchingEnhancements()
 // https://docs.microsoft.com/en-us/dotnet/csharp/language-reference/proposals/csharp-9.0/extension-getenumerator
 void DemonstrateGetEnumeratorExtension()
 {
+	var valuedCustomer = new ValuedCustomer(100_000_000M, 18, "Jane");
 
+	foreach (var value in valuedCustomer)
+	{
+		Console.Out.WriteLine(value);
+	}
+	//var stuff = new Stuff { Id = Guid.NewGuid(), Value = 22 };
+
+	//foreach(var thing in stuff)
+	//{
+
+	//}
 }
 
 // https://devblogs.microsoft.com/dotnet/introducing-c-source-generators/
