@@ -192,7 +192,9 @@ void DemonstratePatternMatchingEnhancements()
 	Console.Out.WriteLine(nullability.Equals(null));
 	Console.Out.WriteLine(nullability.Equals(new ObjectNullability(3)));
 
-	Console.Out.WriteLine(nullability != null);
+	var nullability2 = new ObjectNullability(3);
+	Console.Out.WriteLine(nullability2.Check(null));
+	Console.Out.WriteLine(nullability2.Check(new ObjectNullability(3)));
 }
 
 // https://docs.microsoft.com/en-us/dotnet/csharp/language-reference/proposals/csharp-9.0/extension-getenumerator
