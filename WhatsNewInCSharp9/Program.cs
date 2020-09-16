@@ -22,8 +22,8 @@ using WhatsNewInCSharp9;
 //DemonstrateDiscardsInLambdas();
 //DemonstrateFunctionPointers();
 //DemonstrateBetterConditionalExpressions();
-//DemonstratePartialMethodSignatures();
-DemonstratePatternMatchingEnhancements();
+DemonstratePartialMethodSignatures();
+//DemonstratePatternMatchingEnhancements();
 //DemonstrateGetEnumeratorExtension();
 //DemonstrateSourceGenerators();
 
@@ -172,10 +172,8 @@ void DemonstrateBetterConditionalExpressions()
 }
 
 // https://docs.microsoft.com/en-us/dotnet/csharp/language-reference/proposals/csharp-9.0/extending-partial-methods
-void DemonstratePartialMethodSignatures()
-{
-
-}
+void DemonstratePartialMethodSignatures() => 
+	Console.Out.WriteLine(new PartialMethods().Calculate());
 
 // https://docs.microsoft.com/en-us/dotnet/csharp/language-reference/proposals/csharp-9.0/patterns3
 // https://devblogs.microsoft.com/dotnet/welcome-to-c-9-0/#logical-patterns
@@ -189,12 +187,12 @@ void DemonstratePatternMatchingEnhancements()
 	Console.Out.WriteLine($"100 is {Qwirkle.Qualify(100)}");
 
 	var nullability = new ObjectNullability(3);
-	Console.Out.WriteLine(nullability.Equals(null));
-	Console.Out.WriteLine(nullability.Equals(new ObjectNullability(3)));
-
-	var nullability2 = new ObjectNullability(3);
-	Console.Out.WriteLine(nullability2.Check(null));
-	Console.Out.WriteLine(nullability2.Check(new ObjectNullability(3)));
+	Console.Out.WriteLine($"nullability.Equals(new ObjectNullability(3)) : {nullability.Equals(new ObjectNullability(3))}");
+	Console.Out.WriteLine($"nullability.Equals(null) : {nullability.Equals(null)}");
+	Console.Out.WriteLine();
+	Console.Out.WriteLine($"nullability != null : {nullability != null}");
+	Console.Out.WriteLine($"nullability is {{ }} : {nullability is { }}");
+	Console.Out.WriteLine($"nullability is not null : {nullability is not null}");
 }
 
 // https://docs.microsoft.com/en-us/dotnet/csharp/language-reference/proposals/csharp-9.0/extension-getenumerator

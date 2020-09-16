@@ -11,9 +11,6 @@
 		public override bool Equals(object? obj) => 
 			obj is ObjectNullability other ? this.Value == other.Value : false;
 
-		public bool Check(object? obj) =>
-			obj is ObjectNullability other ? this.Value == other.Value : false;
-
 		public override int GetHashCode() => this.Value.GetHashCode();
 
 		public int Value { get; }
