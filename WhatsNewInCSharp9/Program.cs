@@ -22,10 +22,10 @@ using WhatsNewInCSharp9;
 //DemonstrateDiscardsInLambdas();
 //DemonstrateFunctionPointers();
 //DemonstrateBetterConditionalExpressions();
-DemonstratePartialMethodSignatures();
+//DemonstratePartialMethodSignatures();
 //DemonstratePatternMatchingEnhancements();
 //DemonstrateGetEnumeratorExtension();
-//DemonstrateSourceGenerators();
+DemonstrateSourceGenerators();
 
 // https://docs.microsoft.com/en-us/dotnet/csharp/language-reference/proposals/csharp-9.0/records
 void DemonstrateRecords()
@@ -34,7 +34,7 @@ void DemonstrateRecords()
 	Console.Out.WriteLine(customer);
 	Console.Out.WriteLine($"customer.age = {customer.Age}, customer.name = {customer.Name}");
 	// This won't work...
-	// customer.age = 44;
+	//customer.Age = 44;
 	var (age, name) = customer;
 	Console.Out.WriteLine($"age = {age}, name = {name}");
 
@@ -42,7 +42,12 @@ void DemonstrateRecords()
 	Console.Out.WriteLine(
 		$"customerWithDifferentName.age = {customerWithDifferentName.Age}, customerWithDifferentName.name = {customerWithDifferentName.Name}");
 
-	var mutuableCustomer = new MutuableCustomer(33, "Jeff");
+	var mutuableCustomer = new MutuableCustomer
+	{
+		Age = 33,
+		Name = "Jeff"
+	};
+
 	Console.Out.WriteLine($"mutuableCustomer.Age = {mutuableCustomer.Age}, mutuableCustomer.Name = {mutuableCustomer.Name}");
 	mutuableCustomer.Name = "Julie";
 	Console.Out.WriteLine($"mutuableCustomer.Age = {mutuableCustomer.Age}, mutuableCustomer.Name = {mutuableCustomer.Name}");
@@ -217,6 +222,9 @@ void DemonstrateSourceGenerators()
 		Value = 10
 	};
 
-	//var destination = source.MapToDestination();
+	var destination = source.MapToDestination();
+
+	Console.Out.WriteLine($"{nameof(destination)}.{nameof(Destination.Id)} = {destination.Id}");
+	Console.Out.WriteLine($"{nameof(destination)}.{nameof(Destination.Value)} = {destination.Value}");
 }
 #pragma warning restore CS8321 // Local function is declared but never used
