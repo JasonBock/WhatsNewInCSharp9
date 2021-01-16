@@ -31,5 +31,8 @@ dotnet_style_qualification_for_field = true:error
 dotnet_style_qualification_for_method = true:error
 dotnet_style_qualification_for_property = true:error
 
+# CS8321: Local function is declared but never used
+dotnet_diagnostic.CS8321.severity = none
+
 [*.xml]
 indent_style = tab

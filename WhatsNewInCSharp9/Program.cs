@@ -1,5 +1,4 @@
-﻿#pragma warning disable CS8321 // Local function is declared but never used
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Runtime.CompilerServices;
@@ -8,15 +7,12 @@ using WhatsNewInCSharp9;
 // Note that this is showing the top-level statements feature.
 // https://docs.microsoft.com/en-us/dotnet/csharp/language-reference/proposals/csharp-9.0/top-level-statements
 
-//DemonstrateRecords();
+DemonstrateRecords();
 //DemonstrateTargetTypeNew();
 //DemonstrateModuleInitializer();
 //DemonstrateLocalsInitFlag();
 //DemonstrateNumberTypes();
-
-// WARNING: Show the code, but DO NOT run this until at least RC2!
 //DemonstrateCovariantReturnTypes();
-
 //DemonstrateStaticAnonymousMethods();
 //DemonstrateLocalFunctionAttributes();
 //DemonstrateDiscardsInLambdas();
@@ -25,7 +21,10 @@ using WhatsNewInCSharp9;
 //DemonstratePartialMethodSignatures();
 //DemonstratePatternMatchingEnhancements();
 //DemonstrateGetEnumeratorExtension();
-DemonstrateSourceGenerators();
+
+// https://devblogs.microsoft.com/dotnet/introducing-c-source-generators/
+// https://devblogs.microsoft.com/dotnet/new-c-source-generator-samples/
+//Demonstrate source senerators via the Rocks repo...
 
 // https://docs.microsoft.com/en-us/dotnet/csharp/language-reference/proposals/csharp-9.0/records
 void DemonstrateRecords()
@@ -39,8 +38,8 @@ void DemonstrateRecords()
 	Console.Out.WriteLine($"age = {age}, name = {name}");
 
 	var customerWithDifferentName = customer with { Name = "Joe" };
-	Console.Out.WriteLine(
-		$"customerWithDifferentName.age = {customerWithDifferentName.Age}, customerWithDifferentName.name = {customerWithDifferentName.Name}");
+
+	Console.Out.WriteLine($"{nameof(customerWithDifferentName)} : {customerWithDifferentName}");
 
 	var mutuableCustomer = new MutuableCustomer
 	{
@@ -48,9 +47,9 @@ void DemonstrateRecords()
 		Name = "Jeff"
 	};
 
-	Console.Out.WriteLine($"mutuableCustomer.Age = {mutuableCustomer.Age}, mutuableCustomer.Name = {mutuableCustomer.Name}");
+	Console.Out.WriteLine($"{nameof(mutuableCustomer)} : {mutuableCustomer}");
 	mutuableCustomer.Name = "Julie";
-	Console.Out.WriteLine($"mutuableCustomer.Age = {mutuableCustomer.Age}, mutuableCustomer.Name = {mutuableCustomer.Name}");
+	Console.Out.WriteLine($"{nameof(mutuableCustomer)} : {mutuableCustomer}");
 
 	// Use ILSpy to see how equality is generated.
 	var secondCustomer = new Customer(22, "Jane");
@@ -210,21 +209,3 @@ void DemonstrateGetEnumeratorExtension()
 		Console.Out.WriteLine(value);
 	}
 }
-
-// https://devblogs.microsoft.com/dotnet/introducing-c-source-generators/
-// https://devblogs.microsoft.com/dotnet/new-c-source-generator-samples/
-void DemonstrateSourceGenerators()
-{
-	var source = new Source
-	{
-		Amount = 33M,
-		Id = Guid.NewGuid(),
-		Value = 10
-	};
-
-	var destination = source.MapToDestination();
-
-	Console.Out.WriteLine($"{nameof(destination)}.{nameof(Destination.Id)} = {destination.Id}");
-	Console.Out.WriteLine($"{nameof(destination)}.{nameof(Destination.Value)} = {destination.Value}");
-}
-#pragma warning restore CS8321 // Local function is declared but never used
