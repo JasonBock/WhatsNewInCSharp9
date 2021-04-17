@@ -6,7 +6,7 @@ namespace WhatsNewInCSharp9
 {
 	public static class InitializedData
 	{
-		//[ModuleInitializer]
+		[ModuleInitializer]
 		internal static void Initialize()
 		{
 			Console.Out.WriteLine($"{nameof(Initialize)} is called.");

@@ -7,7 +7,7 @@ using WhatsNewInCSharp9;
 // Note that this is showing the top-level statements feature.
 // https://docs.microsoft.com/en-us/dotnet/csharp/language-reference/proposals/csharp-9.0/top-level-statements
 
-DemonstrateRecords();
+//DemonstrateRecords();
 //DemonstrateTargetTypeNew();
 //DemonstrateModuleInitializer();
 //DemonstrateLocalsInitFlag();
@@ -20,11 +20,11 @@ DemonstrateRecords();
 //DemonstrateBetterConditionalExpressions();
 //DemonstratePartialMethodSignatures();
 //DemonstratePatternMatchingEnhancements();
-//DemonstrateGetEnumeratorExtension();
+DemonstrateGetEnumeratorExtension();
 
 // https://devblogs.microsoft.com/dotnet/introducing-c-source-generators/
 // https://devblogs.microsoft.com/dotnet/new-c-source-generator-samples/
-//Demonstrate source senerators via the Rocks repo...
+//Demonstrate source generators via the InlineMapping repo...
 
 // https://docs.microsoft.com/en-us/dotnet/csharp/language-reference/proposals/csharp-9.0/records
 void DemonstrateRecords()
@@ -33,7 +33,7 @@ void DemonstrateRecords()
 	Console.Out.WriteLine(customer);
 	Console.Out.WriteLine($"customer.age = {customer.Age}, customer.name = {customer.Name}");
 	// This won't work...
-	//customer.Age = 44;
+	// customer.Age = 44;
 	var (age, name) = customer;
 	Console.Out.WriteLine($"age = {age}, name = {name}");
 
@@ -53,6 +53,7 @@ void DemonstrateRecords()
 
 	// Use ILSpy to see how equality is generated.
 	var secondCustomer = new Customer(22, "Jane");
+
 	Console.Out.WriteLine($"secondCustomer == customer is {secondCustomer == customer}");
 }
 
@@ -73,7 +74,7 @@ void DemonstrateModuleInitializer()
 
 // https://docs.microsoft.com/en-us/dotnet/csharp/language-reference/proposals/csharp-9.0/skip-localsinit
 // https://devblogs.microsoft.com/dotnet/performance-improvements-in-net-5/#jit
-//[SkipLocalsInit]
+[SkipLocalsInit]
 unsafe void DemonstrateLocalsInitFlag()
 {
 	Guid g;
